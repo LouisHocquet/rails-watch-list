@@ -13,13 +13,15 @@ base_url = 'http://tmdb.lewagon.com/movie/popular?page='
 
 puts "<<< Cleaning >>>"
 Movie.destroy_all
+
 puts "<<< Adding movies >>>"
-total_pages = 100
+total_pages = 440
 current_page = 1
 while current_page <= total_pages do
   url = "#{base_url}#{current_page}"
   movies_serialized = URI.open(url).read
   movies = JSON.parse(movies_serialized)
+
   movies["results"].each do |movie|
     poster_url = "#{img_url}#{movie["poster_path"]}" 
     new_movie = Movie.new(

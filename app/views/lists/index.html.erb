@@ -1,0 +1,12 @@
+<h1>Lists#index</h1>
+<%= link_to "+", new_list_path, class: "btn btn-primary" %>
+<ul class="list-group">
+  <% @lists.each do |list| %>
+    <li class="list-group-item">
+      <%= list.name %>
+      <%= link_to ('<i class="fas fa-angle-right"></i>').html_safe, list_path(list) %>
+      
+    </li>
+  <% end %>
+</ul>
+
