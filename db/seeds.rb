@@ -8,20 +8,29 @@
 require 'json'
 require 'open-uri'
 
-url = 'http://tmdb.lewagon.com/movie/popular'
-movies_serialized = URI.open(url).read
-movies = JSON.parse(movies_serialized)
+img_url = "https://image.tmdb.org/t/p/w500"
+base_url = 'http://tmdb.lewagon.com/movie/popular?page='
 
 puts "<<< Cleaning >>>"
+Movie.destroy_all
 puts "<<< Adding movies >>>"
-
-movies["results"].each do |movie|
-  new_movie = Movie.new(
-    title: movie["original_title"],
-    overview: movie["overview"],
-    rating: movie["vote_average"]
-  )
-  new_movie.save
+total_pages = 100
+current_page = 1
+while current_page <= total_pages do
+  url = "#{base_url}#{current_page}"
+  movies_serialized = URI.open(url).read
+  movies = JSON.parse(movies_serialized)
+  movies["results"].each do |movie|
+    poster_url = "#{img_url}#{movie["poster_path"]}" 
+    new_movie = Movie.new(
+      title: movie["original_title"],
+      overview: movie["overview"],
+      rating: movie["vote_average"],
+      poster_url: poster_url
+    )
+    new_movie.save
+  end
+  current_page += 1
 end
 
 puts "<<< #{Movie.count} movies added >>>"
