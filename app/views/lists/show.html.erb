@@ -1,23 +1,39 @@
-<h1><%= @list.name %></h1>
-
-<div class="banner-blur-background">
-  <div>
+<div class="banner-blur-background" style="background-image: linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.7)),
+              url(<%= @list.bookmarks.first.movie.poster_url %>);
+              background-size: cover;
+              background-position: center">
     <img src=<%= @list.bookmarks.first.movie.poster_url %> alt="">
-  </div>
 </div>
 
-<div class="container">
-  <ul class="list-group mt-3">
+<div class="container position-relative">
+  <%= link_to "+", new_list_bookmark_path(@list), class: "btn btn-primary position-absolute top-8px right-8px" %>
+  <h1><%= @list.name %></h1>
+  <ul class="card-container mt-3">
     <% @list.bookmarks.each  do |bookmark| %>
-      <li class="list-group-item mb-3 p-4 rounded shadow-sm d-flex justify-content-between">
-        <h3><%= bookmark.movie.title %></h3>
-        <div class="d-flex align-items-center">
-          <%= link_to ('<i class="far fa-trash-alt"></i>').html_safe, bookmark_path(bookmark), method: :delete, class: "text-warning" %>
+      <li class="card-perso card-perso-thumbnail">
+        <%= link_to ('<i class="far fa-trash-alt"></i>').html_safe, bookmark_path(bookmark), method: :delete, class: "delete-card" %>
+        <div class="banner-blur-background" style="background-image: linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.7)),
+                url(<%= bookmark.movie.poster_url %>);
+                background-size: cover;
+                background-position: center">
+            <img src=<%= bookmark.movie.poster_url %> alt="">
+        </div>
+        <div class="thumbnail-content">
+          <h3><%= bookmark.movie.title %></h3>
+          <div>
+            <% rating = bookmark.movie.rating.to_i / 2 %>
+            <% rating.times do  %>
+              <i class="fas fa-star text-warning"></i>
+            <% end %>
+            <% (5 - rating).times do  %>
+              <i class="far fa-star text-warning"></i>
+            <% end %>
+          </div>
+          <p><%= bookmark.movie.overview %></p>
         </div>
       </li>
+
     <% end %>
   </ul>
-
-  <%= link_to "Create bookmark", new_list_bookmark_path(@list), class: "btn btn-primary mt-1" %>
 </div>
 

@@ -1,8 +1,9 @@
 .banner-blur-background {
   display: flex;
-  align-items: center;
-
-  div {
-    width: 50%;
+  justify-content: center;
+  height: 40vh;
+  width: 100%;
+  img {
+    height: 100%;
   }
 }

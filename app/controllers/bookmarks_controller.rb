@@ -6,12 +6,13 @@ class BookmarksController < ApplicationController
 
   def create
     @list = List.find(params[:list_id])
-    @movie = Movie.find(params[:bookmark][:movie_id])
     @bookmark = Bookmark.new(bookmark_params)
+    unless params[:bookmark][:movie_id].empty?
+      @movie = Movie.find(params[:bookmark][:movie_id])
+      @bookmark.movie = @movie
+    end
     @bookmark.list = @list
-    @bookmark.movie = @movie
-    # raise
-    if @bookmark.save!
+    if @bookmark.save
       redirect_to list_path(@list)
     else
       render :new

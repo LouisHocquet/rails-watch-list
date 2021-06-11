@@ -2,6 +2,7 @@
   background-size: cover;
   background-position: center;
   padding: 200px 0;
+  height: 90vh;
 }
 
 .banner h1 {
@@ -17,4 +18,34 @@
   color: white;
   opacity: .7;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.banner {
+  a {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px white;
+    border-radius: 4px;
+    padding: 4px 24px;
+    width: min-content;
+    align-items: center;
+    text-decoration: none;
+    margin: 0 auto;
+    transition-duration: 200ms;
+    i {
+      margin-top: 0;
+      transition-duration: 200ms;
+    }
+    &:hover {
+      background: rgba(0,0,255,0.8);
+      // color: black;
+      // border: black;
+      transition-duration: 200ms;
+      i {
+        margin-top: 4px;
+        transition-duration: 200ms;
+      }
+    }
+  }
 }
